@@ -53,7 +53,7 @@ function App() {
 					<input id="color" value={details.color} onChange={setField('color')} type="color" className="form-control comfortaa" />
 				</div>
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="imageUrl">imageUrl</label>
+					<label className="fs-16" htmlFor="imageUrl">Image Url</label>
 					<input id="imageUrl" value={details.imageUrl} onChange={setField('imageUrl')} type="text" className="form-control comfortaa" />
 				</div>
 
