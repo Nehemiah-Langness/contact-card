@@ -12,7 +12,7 @@ export default defineConfig({
     manifest: {
       name: 'Contact Card',
       background_color: '#212529',
-      short_name: 'Contact-Card',
+      short_name: 'Contact Card',
       description: 'Build a contact card on your mobile device',
       theme_color: '#222587',
       icons: [
