@@ -1,4 +1,4 @@
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Teko:wght@300..700&display=swap');
 @import './background.scss';
 
@@ -31,7 +31,28 @@ body {
             width: 40%;
         }
 
-        .contact {}
+        .contact {
+            padding: 18pt 8pt;
+        }
+    }
+
+    .expand {
+        align-self: stretch;
+        flex-grow: 1;
+
+        .contact-card {
+            margin: auto;
+            aspect-ratio: 3.5 / 2;
+            width: auto;
+            height: auto;
+            max-width: 90vw;
+            min-width: 3.5in;
+            min-height: 2in;
+        }
+
+        .edit-button {
+            bottom: 0;
+        }
     }
 
     .edit-button {
@@ -49,6 +70,136 @@ body {
         button {
             width: 3rem;
             height: 3rem;
+        }
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .expand {
+        .contact-card {
+            .contact {
+                padding: 22pt 10pt;
+            }
+        }
+
+        .fs-18 {
+            font-size: 22pt;
+        }
+
+        .fs-12 {
+            font-size: 14pt;
+        }
+
+        .fs-10 {
+            font-size: 13pt;
+        }
+
+        .fs-8 {
+            font-size: 10pt;
+        }
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .expand {
+        .contact-card {
+            .contact {
+                padding: 26pt 12pt;
+            }
+        }
+
+        .fs-18 {
+            font-size: 26pt;
+        }
+
+        .fs-12 {
+            font-size: 17pt;
+        }
+
+        .fs-10 {
+            font-size: 16pt;
+        }
+
+        .fs-8 {
+            font-size: 12pt;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .expand {
+        .contact-card {
+            .contact {
+                padding: 40pt 16pt;
+            }
+        }
+
+        .fs-18 {
+            font-size: 40pt;
+        }
+
+        .fs-12 {
+            font-size: 22pt;
+        }
+
+        .fs-10 {
+            font-size: 20pt;
+        }
+
+        .fs-8 {
+            font-size: 16pt;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .expand {
+        .contact-card {
+            .contact {
+                padding: 55pt 20pt;
+            }
+        }
+
+        .fs-18 {
+            font-size: 55pt;
+        }
+
+        .fs-12 {
+            font-size: 30pt;
+        }
+
+        .fs-10 {
+            font-size: 28pt;
+        }
+
+        .fs-8 {
+            font-size: 20pt;
+        }
+    }
+}
+
+@include media-breakpoint-up(xxl) {
+    .expand {
+        .contact-card {
+            .contact {
+                padding: 60pt 24pt;
+            }
+        }
+
+        .fs-18 {
+            font-size: 60pt;
+        }
+
+        .fs-12 {
+            font-size: 35pt;
+        }
+
+        .fs-10 {
+            font-size: 33pt;
+        }
+
+        .fs-8 {
+            font-size: 24pt;
         }
     }
 }

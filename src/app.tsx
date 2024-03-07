@@ -1,4 +1,4 @@
-import { faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faExpandArrowsAlt, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ContactCard, ContactCardProps } from "./components/contact-card";
@@ -17,6 +17,7 @@ function App() {
 
 	const [details, setDetails] = usePersistantState<ContactCardProps>('details', { color: '#340c8f', email: '', imageUrl: '', name: '', phone: '', title: '' });
 	const [editMode, setEditMode] = useState(!details.name);
+	const [expand, setExpand] = useState(false);
 
 	const setField = useCallback((field: keyof typeof details) => {
 		return (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +56,7 @@ function App() {
 					<label className="fs-16" htmlFor="imageUrl">imageUrl</label>
 					<input id="imageUrl" value={details.imageUrl} onChange={setField('imageUrl')} type="text" className="form-control comfortaa" />
 				</div>
-				
+
 				<button type="button" className="btn btn-success" onClick={() => setEditMode(false)}>Save</button>
 			</div>
 		</div>
@@ -63,10 +64,14 @@ function App() {
 
 	return (
 		<div className="d-flex h-100 justify-content-center align-items-center comfortaa">
-			<div className="position-relative">
+			<div className={`position-relative ${expand ? 'expand' : ''}`}>
 				<ContactCard {...details} />
 				<div className="edit-button">
-					<button type="button" onClick={() => setEditMode(true)} className="btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
+					<div className="d-flex">
+
+						<button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
+						<button type="button" onClick={() => setExpand(x => !x)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faExpandArrowsAlt} /></button>
+					</div>
 				</div>
 			</div>
 		</div>

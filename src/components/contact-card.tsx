@@ -23,7 +23,7 @@ export function ContactCard(props: ContactCardProps) {
 	},[props.color])
 
 	return (
-		<div className="contact-card rounded-1 overflow-hidden d-flex flex-column position-relative"
+		<div className={`contact-card rounded-1 overflow-hidden d-flex flex-column position-relative`}
 			style={{ '--bs-primary': props.color, '--bs-primary-rgb': rgb } as React.CSSProperties}
 		>
 			<div className="d-flex flex-grow-1">
@@ -42,18 +42,18 @@ export function ContactCard(props: ContactCardProps) {
 						</div>
 					}
 				</div>
-				<div className="contact text-end flex-grow-1 p-2 py-4 d-flex flex-column">
+				<div className="contact text-end flex-grow-1 d-flex flex-column">
 					<div>
-						{!!props.name && <div className="teko fs-18">{props.name}</div>}
-						{!!props.title && <div className="comfortaa opacity-75 fs-8 mt-1">{props.title}</div>}
+						{!!props.name && <div className="teko fs-18 text-primary text-nowrap">{props.name}</div>}
+						{!!props.title && <div className="comfortaa opacity-75 fs-8 mt-1 text-nowrap">{props.title}</div>}
 					</div>
 					<div className="flex-grow-1"></div>
 					<div>
 						{!!props.email && <div className="d-flex mb-2 justify-content-end align-items-center">
-							<div className="comfortaa fs-10">{props.email}</div> <FontAwesomeIcon className="ms-2 text-primary opacity-75" icon={faEnvelope} />
+							<div className="comfortaa fs-10 text-nowrap">{props.email}</div> <FontAwesomeIcon className="ms-2 text-primary opacity-75 fs-12" icon={faEnvelope} />
 						</div>}
 						{!!props.phone && <div className="d-flex mb-2 justify-content-end align-items-center">
-							<div className="comfortaa fs-10">{props.phone}</div>  <FontAwesomeIcon className="ms-2 text-primary opacity-75" icon={faPhone} />
+							<div className="comfortaa fs-10 text-nowrap">{props.phone}</div>  <FontAwesomeIcon className="ms-2 text-primary opacity-75 fs-12" icon={faPhone} />
 						</div>}
 					</div>
 
