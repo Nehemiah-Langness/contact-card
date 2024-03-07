@@ -48,7 +48,7 @@ body {
     .contact-card {
         align-self: stretch;
         flex-grow: 1;
-        
+
         margin: auto;
         aspect-ratio: 3.5 / 2;
         width: auto;
@@ -82,12 +82,10 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-    .contact-card {
-        transform: rotate(90deg);
-    }
 
     .expand {
         .contact-card {
+            transform: rotate(90deg);
             max-width: 90vh;
         }
     }
