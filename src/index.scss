@@ -22,54 +22,73 @@ body {
         border-radius: 5px;
     }
 
-    .contact-card {
-        background: var(--bs-light);
-        width: 3.5in;
-        height: 2in;
 
-        .branding {
-            width: 40%;
-        }
+}
 
-        .contact {
-            padding: 18pt 8pt;
-        }
+.contact-card {
+    background: var(--bs-light);
+    width: 3.5in;
+    height: 2in;
+
+    .branding {
+        width: 40%;
     }
 
-    .expand {
+    .contact {
+        padding: 18pt 8pt;
+    }
+}
+
+.expand {
+    align-self: stretch;
+    flex-grow: 1;
+
+    display: flex;
+
+    .contact-card {
         align-self: stretch;
         flex-grow: 1;
-
-        .contact-card {
-            margin: auto;
-            aspect-ratio: 3.5 / 2;
-            width: auto;
-            height: auto;
-            max-width: 90vw;
-            min-width: 3.5in;
-            min-height: 2in;
-        }
-
-        .edit-button {
-            bottom: 0;
-        }
+        
+        margin: auto;
+        aspect-ratio: 3.5 / 2;
+        width: auto;
+        height: auto;
+        max-width: 90vw;
+        min-width: 3.5in;
+        min-height: 2in;
     }
 
     .edit-button {
-        position: absolute;
-        left: 50%;
-        bottom: -5rem;
-        transform: translate(-50%, -50%);
-        opacity: .1;
-        transition: opacity .2s linear;
+        bottom: 0;
+    }
+}
 
-        &:hover {
-            opacity: 1;
-        }
+.edit-button {
+    position: absolute;
+    left: 50%;
+    bottom: -5rem;
+    transform: translate(-50%, -50%);
+    opacity: .1;
+    transition: opacity .2s linear;
 
-        button {
-            width: 3rem;
-            height: 3rem;
+    &:hover {
+        opacity: 1;
+    }
+
+    button {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    .contact-card {
+        transform: rotate(90deg);
+    }
+
+    .expand {
+        .contact-card {
+            max-width: 90vh;
         }
     }
 }
