@@ -9,6 +9,7 @@ body,
 }
 
 body {
+    overflow-x: hidden;
 
     background: var(--bs-gray-900);
 
@@ -54,6 +55,7 @@ body {
         width: auto;
         height: auto;
         max-width: 90vw;
+        max-height: 90vh;
         min-width: 3.5in;
         min-height: 2in;
     }
@@ -82,11 +84,11 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-
     .expand {
         .contact-card {
             transform: rotate(90deg);
             max-width: 90vh;
+            max-height: 90vw;
         }
     }
 }
