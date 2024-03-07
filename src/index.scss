@@ -10,7 +10,7 @@ body,
 
 body {
 
-    background: var(--bs-secondary);
+    background: var(--bs-gray-900);
 
     &::-webkit-scrollbar {
         background-color: rgba(219, 219, 219, 1);
@@ -39,7 +39,7 @@ body {
         left: 50%;
         bottom: -5rem;
         transform: translate(-50%, -50%);
-        opacity: .25;
+        opacity: .1;
         transition: opacity .2s linear;
 
         &:hover {

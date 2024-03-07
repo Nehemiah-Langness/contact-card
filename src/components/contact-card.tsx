@@ -1,5 +1,6 @@
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 
 export type ContactCardProps = {
 	name: string;
@@ -12,6 +13,14 @@ export type ContactCardProps = {
 
 export function ContactCard(props: ContactCardProps) {
 	const rgb = props.color.length === 7 && props.color.startsWith('#') ? `${parseInt(props.color.substring(1, 3), 16)}, ${parseInt(props.color.substring(3, 5), 16)}, ${parseInt(props.color.substring(5, 7), 16)}` : '52, 12, 143'
+
+	useEffect(() => {
+		const themeMeta = document.head.querySelector('meta[name="theme-color"]');
+		if (themeMeta) {
+			themeMeta.setAttribute('content', props.color)
+		}
+		console.log(themeMeta)
+	},[props.color])
 
 	return (
 		<div className="contact-card rounded-1 overflow-hidden d-flex flex-column position-relative"
