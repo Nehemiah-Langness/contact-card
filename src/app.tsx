@@ -1,39 +1,76 @@
-import { faContactBook, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ContactCard, ContactCardProps } from "./components/contact-card";
+
+function usePersistantState<T>(name: string, defaultValue: T) {
+	const key = useRef(name)
+	const [value, setState] = useState<T>(JSON.parse(localStorage.getItem(key.current) ?? 'null') ?? defaultValue);
+	useEffect(() => {
+		localStorage.setItem(key.current, JSON.stringify(value));
+	}, [value]);
+
+	return [value, setState] as [typeof value, typeof setState];
+}
 
 function App() {
-	return (
-		<div className="d-flex h-100 justify-content-center align-items-center comfortaa">
-			<div className="contact-card rounded-1 overflow-hidden d-flex flex-column">
-				<div className="d-flex flex-grow-1">
-					<div className="branding d-flex justify-content-center align-items-center">
-						<FontAwesomeIcon style={{fontSize: '60pt'}} className="text-primary" icon={faContactBook}/>
-					</div>
-					<div className="contact text-end flex-grow-1 p-2 py-4 d-flex flex-column">
-						<div>
-							<div className="teko fs-18">Nehemiah Langness</div>
-							<div className="comfortaa opacity-75 fs-8 mt-1">Senior Software Technical Lead</div>
-						</div>
-						<div className="flex-grow-1"></div>
-						<div>
-							<div className="d-flex mb-2 justify-content-end align-items-center">
-								<div className="comfortaa fs-10">MyEmail@gmail.com</div> <FontAwesomeIcon className="ms-2 text-primary opacity-75" icon={faEnvelope} />
-							</div>
-							<div className="d-flex mb-2 justify-content-end align-items-center">
-								<div className="comfortaa fs-10">555-123-4567</div>  <FontAwesomeIcon className="ms-2 text-primary opacity-75" icon={faPhone} />
-							</div>
-						</div>
 
-					</div>
+	const [details, setDetails] = usePersistantState<ContactCardProps>('details', { color: '#340c8f', email: '', imageUrl: '', name: '', phone: '', title: '' });
+	const [editMode, setEditMode] = useState(!details.name);
+
+	const setField = useCallback((field: keyof typeof details) => {
+		return (e: React.ChangeEvent<HTMLInputElement>) => {
+			setDetails(prev => ({
+				...prev,
+				[field]: e.target.value
+			}))
+		}
+	}, [setDetails])
+
+	if (editMode) {
+		return <div className="container">
+			<div className="bg-white rounded-4 border px-4 py-5 mt-3 mx-5">
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="name">Name</label>
+					<input id="name" value={details.name} onChange={setField('name')} type="text" className="form-control comfortaa" />
+				</div>
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="title">Title</label>
+					<input id="title" value={details.title} onChange={setField('title')} type="text" className="form-control comfortaa" />
+				</div>
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="email">Email Address</label>
+					<input id="email" value={details.email} onChange={setField('email')} type="text" className="form-control comfortaa" />
+				</div>
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="phone">Phone Number</label>
+					<input id="phone" value={details.phone} onChange={setField('phone')} type="text" className="form-control comfortaa" />
 				</div>
 
-				<div className="bg-primary pt-3"></div>
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="color">Color</label>
+					<input id="color" value={details.color} onChange={setField('color')} type="color" className="form-control comfortaa" />
+				</div>
+				<div className="mb-3">
+					<label className="fs-16" htmlFor="imageUrl">imageUrl</label>
+					<input id="imageUrl" value={details.imageUrl} onChange={setField('imageUrl')} type="text" className="form-control comfortaa" />
+				</div>
+				
+				<button type="button" className="btn btn-success" onClick={() => setEditMode(false)}>Save</button>
+			</div>
+		</div>
+	}
 
+	return (
+		<div className="d-flex h-100 justify-content-center align-items-center comfortaa">
+			<div className="position-relative">
+				<ContactCard {...details} />
+				<div className="edit-button">
+					<button type="button" onClick={() => setEditMode(true)} className="btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
+				</div>
 			</div>
 		</div>
 	);
 }
-
-
 
 export default App;

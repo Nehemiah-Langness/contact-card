@@ -1,6 +1,6 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Teko:wght@300..700&display=swap');
-
+@import './background.scss';
 
 html,
 body,
@@ -31,8 +31,35 @@ body {
             width: 40%;
         }
 
-        .contact {
+        .contact {}
+    }
+
+    .edit-button {
+        position: absolute;
+        left: 50%;
+        bottom: -5rem;
+        transform: translate(-50%, -50%);
+        opacity: .25;
+        transition: opacity .2s linear;
+
+        &:hover {
+            opacity: 1;
         }
+
+        button {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+}
+
+.form-control {
+    max-width: 30rem;
+
+    &[type='color'] {
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
     }
 }
 
@@ -65,8 +92,13 @@ body {
     font-optical-sizing: auto;
 }
 
-.teko {
+.teko,
+label {
     font-family: "Teko", sans-serif;
     font-optical-sizing: auto;
     line-height: 1;
+}
+
+.cls-1 {
+    fill: #000000 !important;
 }

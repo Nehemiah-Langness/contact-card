@@ -7,5 +7,5 @@ export default defineConfig({
   server: {
     port: 5000,
   },
-  base: "/Contact-Card/"
+  base: "/contact-card/"
 })
