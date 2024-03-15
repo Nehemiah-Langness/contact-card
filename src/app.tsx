@@ -98,7 +98,7 @@ function App() {
 				</div>
 
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="contactImageUrl">Contact Image Url <VisibleDevice/></label>
+					<label className="fs-16" htmlFor="contactImageUrl">Contact Image Url <VisibleDevice /></label>
 					<input id="contactImageUrl" value={details.contactImageUrl} onChange={setField('contactImageUrl')} type="text" className="form-control comfortaa" />
 					{details.contactImageUrl &&
 						<ImgBase64 src={details.contactImageUrl} width={64} height={64} setSrc={updatePhotoSource} />
@@ -109,15 +109,15 @@ function App() {
 					<label className="fs-16">Job</label>
 					<div className="ps-2 pt-2 border-top">
 						<div className="mb-3">
-							<label className="fs-16" htmlFor="organization">Organization <VisibleDevice/></label>
+							<label className="fs-16" htmlFor="organization">Organization <VisibleDevice /></label>
 							<input id="organization" value={details.organization} onChange={setField('organization')} type="text" className="form-control comfortaa" />
 						</div>
 						<div className="mb-3">
-							<label className="fs-16" htmlFor="department">Department <VisibleDevice/></label>
+							<label className="fs-16" htmlFor="department">Department <VisibleDevice /></label>
 							<input id="department" value={details.department} onChange={setField('department')} type="text" className="form-control comfortaa" />
 						</div>
 						<div className="mb-3">
-							<label className="fs-16" htmlFor="team">Team/Unit <VisibleDevice/></label>
+							<label className="fs-16" htmlFor="team">Team/Unit <VisibleDevice /></label>
 							<input id="team" value={details.team} onChange={setField('team')} type="text" className="form-control comfortaa" />
 						</div>
 
@@ -126,7 +126,7 @@ function App() {
 							<input id="title" value={details.title} onChange={setField('title')} type="text" className="form-control comfortaa" />
 						</div>
 						<div className="mb-3">
-							<label className="fs-16" htmlFor="role">Role <VisibleDevice/></label>
+							<label className="fs-16" htmlFor="role">Role <VisibleDevice /></label>
 							<input id="role" value={details.role} onChange={setField('role')} type="text" className="form-control comfortaa" />
 						</div>
 
@@ -196,9 +196,14 @@ function App() {
 
 						<button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
 						<button type="button" onClick={() => setExpand(x => !x)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faExpandArrowsAlt} /></button>
-						{navigator.share && <button type="button" onClick={() => navigator.share({
-							title: 'Share Contact Card',
-							url: `data:text/vcard;base64,${vCard}`
+						{navigator.share && <button type="button" onClick={() => fetch(`data:text/vcard;base64,${vCard}`).then(x => x.blob()).then(blob => new File([blob], `${details.name}.vcf`, { type: 'text/vcard' })).then(file => {
+							return navigator.share({
+								title: 'Share Contact Card',
+								files: [file]
+							});
+						}).catch((e: Error) => {
+							console.log(e)
+							alert('Unable to share Contact Card')
 						})} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faShare} /></button>}
 						<a className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow" href={`data:text/vcard;base64,${vCard}`} download={`${details.name}.vcf`}><FontAwesomeIcon className="text-dark" icon={faDownload} /></a>
 					</div>
