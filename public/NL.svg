@@ -8,7 +8,7 @@
 	.st2{mask:url(#SVGID_1_);fill:url(#SVGID_00000012471362821762739740000010838464080845598394_);stroke:#2272AF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
 
 	#NL {
-		animation: spotlight 3s linear infinite;
+		animation: spotlight 8s linear infinite;
 		transform-origin: 80px 80px;
 	}
 
