@@ -41,6 +41,7 @@ type VCardData = {
     NICKNAME?: string[];
     NOTE?: string;
     LOGO?: string;
+    TITLE?: string;
     ROLE?: string;
     ORG?: {
         NAME: string;
@@ -67,6 +68,7 @@ export class VCard {
             this.vcard.GENDER ? `GENDER:${this.formatText(this.vcard.GENDER)}` : '',
             this.vcard.KIND ? `KIND:${this.formatText(this.vcard.KIND)}` : '',
             this.vcard.NOTE ? `NOTE:${this.formatText(this.vcard.NOTE)}` : '',
+            this.vcard.TITLE ? `TITLE:${this.formatText(this.vcard.TITLE)}` : '',
             this.vcard.ROLE ? `ROLE:${this.formatText(this.vcard.ROLE)}` : '',
             this.vcard.PHOTO ? `PHOTO:${this.vcard.PHOTO}` : '',
             this.vcard.LOGO ? `LOGO:${this.vcard.LOGO}` : '',
@@ -75,9 +77,9 @@ export class VCard {
             this.vcard.ORG ? `ORG:${[this.vcard.ORG.NAME, ...this.vcard.ORG.SUBDEPARTMENTS ?? []].map(c => this.formatText(c)).join(',')}` : '',
             this.vcard.CATEGORIES ? `CATEGORIES:${this.vcard.CATEGORIES.map(c => this.formatText(c)).join(',')}` : '',
             this.vcard.NICKNAME ? `NICKNAME:${this.vcard.NICKNAME.map(c => this.formatText(c)).join(',')}` : '',
-            this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR;${adr.PREF ? 'PREF=1;' : ''}TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : '',
-            this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL;${email.PREF ? 'PREF=1;' : ''}${email.TYPE ? `TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`).join('\n') : '',
-            this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;${tel.PREF ? 'PREF=1;' : ''}${tel.TYPE ? `TYPE="${tel.TYPE.map(t => this.formatText(t)).join(',')}"` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`).join('\n') : '',
+            this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR${adr.PREF ? ';PREF=1' : ''};TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : '',
+            this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL${email.PREF ? ';PREF=1' : ''}${email.TYPE ? `;TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`).join('\n') : '',
+            this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=uri${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;TYPE="${tel.TYPE.map(t => this.formatText(t)).join(',')}"` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`).join('\n') : '',
             `END:VCARD`,
         ].filter(x => x).join('\n');
 

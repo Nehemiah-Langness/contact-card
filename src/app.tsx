@@ -1,6 +1,6 @@
-import { faExpandArrowsAlt, faPencil } from "@fortawesome/free-solid-svg-icons";
+import { faDownload, faExpandArrowsAlt, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ContactCard, ContactCardProps } from "./components/contact-card";
 import { VCard } from "./services/v-card";
 import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
@@ -17,11 +17,35 @@ function usePersistantState<T>(name: string, defaultValue: T) {
 
 type FormData = ContactCardProps & {
 	contactImageUrl: string;
+	contactImage: string;
+	image: string;
+	role: string;
+	organization: string;
+	department: string;
+	team: string;
+	orgLogoUrl: string;
+	orgLogo: string;
 }
 
 function App() {
 
-	const [details, setDetails] = usePersistantState<FormData>('details', { color: '#340c8f', email: '', imageUrl: '', name: '', phone: '', title: '', contactImageUrl: '' });
+	const [details, setDetails] = usePersistantState<FormData>('details', {
+		color: '#340c8f',
+		email: '',
+		imageUrl: '',
+		name: '',
+		phone: '',
+		title: '',
+		contactImageUrl: '',
+		contactImage: '',
+		image: '',
+		department: '',
+		organization: '',
+		team: '',
+		role: '',
+		orgLogoUrl: '',
+		orgLogo: '',
+	});
 	const [editMode, setEditMode] = useState(!details.name);
 	const [expand, setExpand] = useState(false);
 	const vCard = useMemo(() => (
@@ -29,31 +53,39 @@ function App() {
 			FN: details.name,
 			EMAIL: details.email ? [
 				{
-					TYPE: 'personal',
 					PREF: true,
 					VALUE: details.email
 				}
 			] : undefined,
-			PHOTO: details.contactImageUrl,
-			ROLE: details.title,
+			PHOTO: details.contactImage,
+			TITLE: details.title,
+			ROLE: details.role,
 			TEL: details.phone ? [
 				{
-					TYPE: ['voice'],
+					TYPE: ['cell', 'voice', 'text'],
 					PREF: true,
 					VALUE: details.phone
 				}
-			] : undefined
+			] : undefined,
+			ORG: details.organization ? {
+				NAME: details.organization,
+				SUBDEPARTMENTS: [details.department, details.team]
+			} : undefined
 		}).toBase64()
-	), [details.contactImageUrl, details.email, details.name, details.phone, details.title])
+	), [details.contactImage, details.department, details.email, details.name, details.organization, details.phone, details.role, details.team, details.title])
 
 	const setField = useCallback((field: keyof typeof details) => {
-		return (e: React.ChangeEvent<HTMLInputElement>) => {
+		return (e: React.ChangeEvent<HTMLInputElement> | string) => {
 			setDetails(prev => ({
 				...prev,
-				[field]: e.target.value
+				[field]: typeof e === 'string' ? e : e.target.value
 			}))
 		}
-	}, [setDetails])
+	}, [setDetails]);
+
+	const updatePhotoSource = useMemo(() => setField('contactImage'), [setField])
+	const updateImageSource = useMemo(() => setField('image'), [setField])
+	const updateOrgLogoSource = useMemo(() => setField('orgLogo'), [setField])
 
 	useEffect(() => {
 		console.log(atob(vCard))
@@ -63,37 +95,90 @@ function App() {
 		return <div className="container">
 			<div className="bg-white rounded-4 border px-4 py-5 mt-3 mx-5">
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="name">Name</label>
+					<label className="fs-16" htmlFor="name">Name <VisibleOnline /></label>
 					<input id="name" value={details.name} onChange={setField('name')} type="text" className="form-control comfortaa" />
 				</div>
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="title">Title</label>
-					<input id="title" value={details.title} onChange={setField('title')} type="text" className="form-control comfortaa" />
+					<label className="fs-16">Job</label>
+					<div className="ps-2 pt-2 border-top">
+						<div className="mb-3">
+							<label className="fs-16" htmlFor="organization">Organization</label>
+							<input id="organization" value={details.organization} onChange={setField('organization')} type="text" className="form-control comfortaa" />
+						</div>
+						<div className="mb-3">
+							<label className="fs-16" htmlFor="department">Department </label>
+							<input id="department" value={details.department} onChange={setField('department')} type="text" className="form-control comfortaa" />
+						</div>
+						<div className="mb-3">
+							<label className="fs-16" htmlFor="team">Team/Unit</label>
+							<input id="team" value={details.team} onChange={setField('team')} type="text" className="form-control comfortaa" />
+						</div>
+
+						<div className="mb-3">
+							<label className="fs-16" htmlFor="title">Title <VisibleOnline /></label>
+							<input id="title" value={details.title} onChange={setField('title')} type="text" className="form-control comfortaa" />
+						</div>
+						<div className="mb-3">
+							<label className="fs-16" htmlFor="role">Role</label>
+							<input id="role" value={details.role} onChange={setField('role')} type="text" className="form-control comfortaa" />
+						</div>
+
+						<label className="fs-16" htmlFor="orgLogoUrl">Logo Url</label>
+						<input id="orgLogoUrl" value={details.orgLogoUrl} onChange={setField('orgLogoUrl')} type="text" className="form-control comfortaa" />
+						{details.orgLogoUrl && <div className="row" style={{ maxWidth: '30rem' }}>
+							<div className="col">
+								<label className="fs-16" htmlFor="orgLogoUrl">Logo Online</label>
+								<img src={details.orgLogoUrl} width={64} height={64} />
+							</div>
+							<div className="col">
+								<label className="fs-16" htmlFor="orgLogoUrl">Logo in Contacts</label>
+								<ImgBase64 src={details.orgLogoUrl} width={64} height={64} setSrc={updateOrgLogoSource} />
+							</div>
+						</div>}
+					</div>
 				</div>
+
+
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="email">Email Address</label>
+					<label className="fs-16" htmlFor="email">Email Address <VisibleOnline /></label>
 					<input id="email" value={details.email} onChange={setField('email')} type="text" className="form-control comfortaa" />
 				</div>
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="phone">Phone Number</label>
+					<label className="fs-16" htmlFor="phone">Phone Number <VisibleOnline /></label>
 					<input id="phone" value={details.phone} onChange={setField('phone')} type="text" className="form-control comfortaa" />
 				</div>
 
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="color">Color</label>
+					<label className="fs-16" htmlFor="color">Color <VisibleOnline /></label>
 					<div className="input-group">
 						<input id="color" value={details.color} onChange={setField('color')} type="color" className="form-control comfortaa" />
 						<input id="color2" value={details.color} onChange={setField('color')} type="text" className="form-control comfortaa" />
 					</div>
 				</div>
 				<div className="mb-3">
-					<label className="fs-16" htmlFor="imageUrl">Image Url</label>
+					<label className="fs-16" htmlFor="imageUrl">Logo Url <VisibleOnline /></label>
 					<input id="imageUrl" value={details.imageUrl} onChange={setField('imageUrl')} type="text" className="form-control comfortaa" />
+					{details.imageUrl && <div className="row" style={{ maxWidth: '30rem' }}>
+						<div className="col">
+							<label className="fs-16" htmlFor="imageUrl">Logo Online</label>
+							<img src={details.imageUrl} width={64} height={64} />
+						</div>
+						<div className="col">
+							<label className="fs-16" htmlFor="imageUrl">Logo in Contacts</label>
+							<ImgBase64 src={details.imageUrl} width={64} height={64} setSrc={updateImageSource} />
+						</div>
+					</div>}
+
+
 				</div>
 
 				<div className="mb-3">
 					<label className="fs-16" htmlFor="contactImageUrl">Contact Image Url</label>
 					<input id="contactImageUrl" value={details.contactImageUrl} onChange={setField('contactImageUrl')} type="text" className="form-control comfortaa" />
+					{details.contactImageUrl && <div className="col">
+						<label className="fs-16" htmlFor="imageUrl">Logo in Contacts</label>
+						<ImgBase64 src={details.contactImageUrl} width={64} height={64} setSrc={updatePhotoSource} />
+					</div>}
 				</div>
 
 				<button type="button" className="btn btn-success" onClick={() => setEditMode(false)}>Save</button>
@@ -110,7 +195,10 @@ function App() {
 
 						<button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
 						<button type="button" onClick={() => setExpand(x => !x)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faExpandArrowsAlt} /></button>
-						<a className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow" href={`data:text/vcard;base64,${vCard}`} download={`${details.name}.vcf`}><FontAwesomeIcon className="text-dark" icon={faShare} /></a>
+						{navigator.canShare() && <button type="button" onClick={() => navigator.share({
+							url: `data:text/vcard;base64,${vCard}`
+						})} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faShare} /></button>}
+						<a className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow" href={`data:text/vcard;base64,${vCard}`} download={`${details.name}.vcf`}><FontAwesomeIcon className="text-dark" icon={faDownload} /></a>
 					</div>
 				</div>
 			</div>
@@ -119,3 +207,43 @@ function App() {
 }
 
 export default App;
+
+const VisibleOnline = memo(() => <span className="fs-14 opacity-75">(Visible Online)</span>)
+
+function ImgBase64({ setSrc: pushSrc, ...props }: React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> & { setSrc: (src: string) => void }) {
+
+	const [src, setSrc] = useState('');
+
+	useEffect(() => {
+		if (!props.src) {
+			setSrc('')
+			return;
+		}
+
+		const img = new Image();
+		img.onload = (() => {
+			const canvas = document.createElement("canvas");
+			canvas.width = img.width;
+			canvas.height = img.height;
+			const ctx = canvas.getContext("2d");
+			if (!ctx) {
+				return '';
+			}
+			ctx.drawImage(img, 0, 0);
+			setSrc(canvas.toDataURL("image/png"));
+		});
+
+		img.setAttribute('crossorigin', 'anonymous');
+		img.src = props.src;
+
+	}, [props.src])
+
+	useEffect(() => {
+		pushSrc(src);
+	}, [pushSrc, src])
+
+
+	if (!src) return null;
+
+	return <img {...props} src={src} />
+}
