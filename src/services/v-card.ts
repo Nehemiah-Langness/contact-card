@@ -77,11 +77,14 @@ export class VCard {
             this.vcard.ORG ? `ORG:${[this.vcard.ORG.NAME, ...this.vcard.ORG.SUBDEPARTMENTS ?? []].map(c => this.formatText(c)).join(';')}` : '',
             this.vcard.CATEGORIES ? `CATEGORIES:${this.vcard.CATEGORIES.map(c => this.formatText(c)).join(',')}` : '',
             this.vcard.NICKNAME ? `NICKNAME:${this.vcard.NICKNAME.map(c => this.formatText(c)).join(',')}` : '',
-            this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR${adr.PREF ? ';PREF=1' : ''};TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : '',
-            this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL${email.PREF ? ';PREF=1' : ''}${email.TYPE ? `;TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`).join('\n') : '',
-            this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=URI${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;${tel.TYPE.map(t => `TYPE=${this.formatText(t).toUpperCase()}`).join(';')}` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`).join('\n') : '',
+            ...(this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR${adr.PREF ? ';PREF=1' : ''};TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : []),
+            ...(this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL${email.PREF ? ';PREF=1' : ''}${email.TYPE ? `;TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`) : []),
+            ...(this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=URI${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;${tel.TYPE.map(t => `TYPE=${this.formatText(t).toUpperCase()}`).join(';')}` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`) : []),
             `END:VCARD`,
-        ].filter(x => x).join('\n');
+        ]
+            .map(x => wrapLine(x))
+            .flat()
+            .filter(x => x).join('\r\n');
 
         return btoa(toString);
     }
@@ -89,6 +92,20 @@ export class VCard {
     formatText(text?: string) {
         return text?.replace(/,/g, '\\,') ?? ''
     }
+}
+
+function wrapLine(line: string, length: number = 72) {
+    let hasWrapped = false;
+    const lines: string[] = [];
+    let current = line;
+    while (current.length > length) {
+        lines.push((hasWrapped ? ' ' : '') + current.substring(0, length));
+        current = current.substring(length);
+        hasWrapped = true;
+    }
+
+    lines.push((hasWrapped ? ' ' : '') +current);
+    return lines
 }
 
 function formatPhone(number: string) {
