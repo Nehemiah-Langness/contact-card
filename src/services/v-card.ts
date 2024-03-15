@@ -74,12 +74,12 @@ export class VCard {
             this.vcard.LOGO ? `LOGO;ENCODING=BASE64;JPEG:${this.vcard.LOGO.split(',')[1]}` : '',
             this.vcard.URL ? `URL:${this.vcard.URL}` : '',
             this.vcard.BDAY ? `BDAY:${this.vcard.BDAY.YEAR.toFixed().padStart(4, '0')}${this.vcard.BDAY.MONTH.toFixed().padStart(4, '0')}${this.vcard.BDAY.DAY.toFixed().padStart(4, '0')}` : '',
-            this.vcard.ORG ? `ORG:${[this.vcard.ORG.NAME, ...this.vcard.ORG.SUBDEPARTMENTS ?? []].map(c => this.formatText(c)).join(',')}` : '',
+            this.vcard.ORG ? `ORG:${[this.vcard.ORG.NAME, ...this.vcard.ORG.SUBDEPARTMENTS ?? []].map(c => this.formatText(c)).join(';')}` : '',
             this.vcard.CATEGORIES ? `CATEGORIES:${this.vcard.CATEGORIES.map(c => this.formatText(c)).join(',')}` : '',
             this.vcard.NICKNAME ? `NICKNAME:${this.vcard.NICKNAME.map(c => this.formatText(c)).join(',')}` : '',
             this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR${adr.PREF ? ';PREF=1' : ''};TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : '',
             this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL${email.PREF ? ';PREF=1' : ''}${email.TYPE ? `;TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`).join('\n') : '',
-            this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=uri${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;TYPE="${tel.TYPE.map(t => this.formatText(t)).join(',')}"` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`).join('\n') : '',
+            this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=URI${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;${tel.TYPE.map(t => `TYPE=${this.formatText(t).toUpperCase()}`).join(';')}` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`).join('\n') : '',
             `END:VCARD`,
         ].filter(x => x).join('\n');
 
