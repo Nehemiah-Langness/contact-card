@@ -70,8 +70,6 @@ export class VCard {
             this.vcard.NOTE ? `NOTE:${this.formatText(this.vcard.NOTE)}` : '',
             this.vcard.TITLE ? `TITLE:${this.formatText(this.vcard.TITLE)}` : '',
             this.vcard.ROLE ? `ROLE:${this.formatText(this.vcard.ROLE)}` : '',
-            this.vcard.PHOTO ? `PHOTO;ENCODING=BASE64;JPEG:${this.vcard.PHOTO.split(',')[1]}` : '',
-            this.vcard.LOGO ? `LOGO;ENCODING=BASE64;JPEG:${this.vcard.LOGO.split(',')[1]}` : '',
             this.vcard.URL ? `URL:${this.vcard.URL}` : '',
             this.vcard.BDAY ? `BDAY:${this.vcard.BDAY.YEAR.toFixed().padStart(4, '0')}${this.vcard.BDAY.MONTH.toFixed().padStart(4, '0')}${this.vcard.BDAY.DAY.toFixed().padStart(4, '0')}` : '',
             this.vcard.ORG ? `ORG:${[this.vcard.ORG.NAME, ...this.vcard.ORG.SUBDEPARTMENTS ?? []].map(c => this.formatText(c)).join(';')}` : '',
@@ -80,11 +78,14 @@ export class VCard {
             ...(this.vcard.ADR ? this.vcard.ADR.map(adr => `ADR${adr.PREF ? ';PREF=1' : ''};TYPE=${this.formatText(adr.TYPE)}:${[adr.POBOX, adr.EXT, adr.STREET, adr.LOCALITY, adr.REGION, adr.CODE, adr.COUNTRY].map(c => this.formatText(c)).join(';')}`) : []),
             ...(this.vcard.EMAIL ? this.vcard.EMAIL.map(email => `EMAIL${email.PREF ? ';PREF=1' : ''}${email.TYPE ? `;TYPE=${this.formatText(email.TYPE)}` : ''}:${email.VALUE}`) : []),
             ...(this.vcard.TEL ? this.vcard.TEL.map(tel => `TEL;VALUE=URI${tel.PREF ? ';PREF=1' : ''}${tel.TYPE ? `;${tel.TYPE.map(t => `TYPE=${this.formatText(t).toUpperCase()}`).join(';')}` : ''}:tel:${formatPhone(tel.VALUE)}${tel.EXT ? `;ext=${this.formatText(tel.EXT)}` : ''}`) : []),
-            `END:VCARD`,
+            this.vcard.LOGO ? `LOGO;ENCODING=BASE64;JPEG:${this.vcard.LOGO.split(',')[1]}` : '',
+            this.vcard.PHOTO ? `PHOTO;ENCODING=BASE64;JPEG:${this.vcard.PHOTO.split(',')[1]}` : '',
+            `\r\nEND:VCARD`,
         ]
+            .filter(x => x)
             .map(x => wrapLine(x))
             .flat()
-            .filter(x => x).join('\r\n');
+            .join('\r\n');
 
         return btoa(toString);
     }
@@ -94,17 +95,17 @@ export class VCard {
     }
 }
 
-function wrapLine(line: string, length: number = 72) {
+function wrapLine(line: string, length: number = 73) {
     let hasWrapped = false;
     const lines: string[] = [];
     let current = line;
-    while (current.length > length) {
-        lines.push((hasWrapped ? ' ' : '') + current.substring(0, length));
-        current = current.substring(length);
+    while (current.length > (length - (hasWrapped ? 1 : 0))) {
+        lines.push((hasWrapped ? ' ' : '') + current.substring(0, length - (hasWrapped ? 1 : 0)));
+        current = current.substring(length - (hasWrapped ? 1 : 0));
         hasWrapped = true;
     }
 
-    lines.push((hasWrapped ? ' ' : '') +current);
+    lines.push((hasWrapped ? ' ' : '') + current);
     return lines
 }
 
