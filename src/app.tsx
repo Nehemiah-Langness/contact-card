@@ -18,7 +18,6 @@ function usePersistantState<T>(name: string, defaultValue: T) {
 type FormData = ContactCardProps & {
 	contactImageUrl: string;
 	contactImage: string;
-	image: string;
 	role: string;
 	organization: string;
 	department: string;
@@ -38,7 +37,6 @@ function App() {
 		title: '',
 		contactImageUrl: '',
 		contactImage: '',
-		image: '',
 		department: '',
 		organization: '',
 		team: '',
@@ -85,7 +83,6 @@ function App() {
 	}, [setDetails]);
 
 	const updatePhotoSource = useMemo(() => setField('contactImage'), [setField])
-	const updateImageSource = useMemo(() => setField('image'), [setField])
 	const updateOrgLogoSource = useMemo(() => setField('orgLogo'), [setField])
 
 	useEffect(() => {
@@ -199,7 +196,8 @@ function App() {
 
 						<button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>
 						<button type="button" onClick={() => setExpand(x => !x)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faExpandArrowsAlt} /></button>
-						{navigator.canShare() && <button type="button" onClick={() => navigator.share({
+						{navigator.share && <button type="button" onClick={() => navigator.share({
+							title: 'Share Contact Card',
 							url: `data:text/vcard;base64,${vCard}`
 						})} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faShare} /></button>}
 						<a className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow" href={`data:text/vcard;base64,${vCard}`} download={`${details.name}.vcf`}><FontAwesomeIcon className="text-dark" icon={faDownload} /></a>
