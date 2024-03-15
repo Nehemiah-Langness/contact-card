@@ -67,12 +67,13 @@ function App() {
 					VALUE: details.phone
 				}
 			] : undefined,
+			LOGO: details.orgLogo,
 			ORG: details.organization ? {
 				NAME: details.organization,
-				SUBDEPARTMENTS: [details.department, details.team]
+				SUBDEPARTMENTS: [details.department, details.team].filter(x => x)
 			} : undefined
 		}).toBase64()
-	), [details.contactImage, details.department, details.email, details.name, details.organization, details.phone, details.role, details.team, details.title])
+	), [details.contactImage, details.department, details.email, details.name, details.orgLogo, details.organization, details.phone, details.role, details.team, details.title])
 
 	const setField = useCallback((field: keyof typeof details) => {
 		return (e: React.ChangeEvent<HTMLInputElement> | string) => {
@@ -230,7 +231,7 @@ function ImgBase64({ setSrc: pushSrc, ...props }: React.DetailedHTMLProps<React.
 				return '';
 			}
 			ctx.drawImage(img, 0, 0);
-			setSrc(canvas.toDataURL("image/png"));
+			setSrc(canvas.toDataURL("image/jpeg"));
 		});
 
 		img.setAttribute('crossorigin', 'anonymous');
