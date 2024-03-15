@@ -238,7 +238,7 @@ function ImgBase64({ setSrc: pushSrc, ...props }: React.DetailedHTMLProps<React.
 				return '';
 			}
 			ctx.drawImage(img, 0, 0);
-			setSrc(canvas.toDataURL("image/png"));
+			setSrc(canvas.toDataURL("image/jpeg"));
 		});
 
 		img.setAttribute('crossorigin', 'anonymous');
