@@ -7,8 +7,7 @@ import {
 	Route,
 	RouterProvider,
 	useLocation,
-	useNavigate,
-	useParams,
+	useNavigate
 } from "react-router-dom";
 import { FormData } from "./types/form-data";
 
