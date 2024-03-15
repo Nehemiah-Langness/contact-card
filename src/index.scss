@@ -207,11 +207,17 @@ body {
     }
 }
 
+.input-group {
+    max-width: 30rem;
+}
+
 .form-control {
     max-width: 30rem;
 
     &[type='color'] {
-        padding: 0;
+        height: 2.5rem;
+        max-width: 2.5rem;
+        padding: 0.357rem;
         overflow: hidden;
         cursor: pointer;
     }

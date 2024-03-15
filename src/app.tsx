@@ -50,7 +50,10 @@ function App() {
 
 				<div className="mb-3">
 					<label className="fs-16" htmlFor="color">Color</label>
-					<input id="color" value={details.color} onChange={setField('color')} type="color" className="form-control comfortaa" />
+					<div className="input-group">
+						<input id="color" value={details.color} onChange={setField('color')} type="color" className="form-control comfortaa" />
+						<input id="color2" value={details.color} onChange={setField('color')} type="text" className="form-control comfortaa" />
+					</div>
 				</div>
 				<div className="mb-3">
 					<label className="fs-16" htmlFor="imageUrl">Image Url</label>

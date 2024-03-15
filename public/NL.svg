@@ -5,55 +5,86 @@
 <style type="text/css">
 	.st0{filter:url(#Adobe_OpacityMaskFilter);}
 	.st1{fill:#FFFFFF;}
-	.st2{mask:url(#SVGID_1_);fill:url(#SVGID_00000012471362821762739740000010838464080845598394_);stroke:#2272AF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{mask:url(#Swipe_00000032639081377973608010000003860465021863023509_);}
+	.st3{fill:#2272AF;}
+	.st4{fill:url(#SVGID_1_);}
+	.st5{display:none;}
+	.st6{display:inline;fill:#2272AF;}
 
-	#NL {
-		animation: spotlight 8s linear infinite;
-		transform-origin: 80px 80px;
+	#Swipe {
+		animation: swipe 5s ease-in-out infinite;
 	}
 
-	@keyframes spotlight {
+	@keyframes swipe {
 		0% {
-			transform:  rotate(0deg);
+			transform: translate(-100%, 0);
 		}
 
+		75% {
+			transform: translate(100%, 0)
+		}
 
 		100% {
-			transform: rotate(360deg);
+			transform: translate(100%, 0)
 		}
 	}
+
 </style>
 <defs>
-	<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-94.7" y="-94.7" width="381.5" height="381.5">
+	<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-288" y="-96" width="768" height="384">
 		<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
 	</filter>
 </defs>
-<mask maskUnits="userSpaceOnUse" x="-94.7" y="-94.7" width="381.5" height="381.5" id="SVGID_1_">
+<mask maskUnits="userSpaceOnUse" x="-288" y="-96" width="768" height="384" id="Swipe_00000046308168660427260890000018304333683032358805_">
 	<g class="st0">
 		<g>
-			<path class="st1" d="M97.6,165L97.6,165c-0.9,3.4-4.4,6.2-7.8,6.2h-66c-6.2,0-9.9-5.2-8.3-11.6L48.8,27c0.9-3.4,4.4-6.2,7.8-6.2
-				h13.3c3.4,0,5.5,2.8,4.7,6.2L44.4,147.2c-1.6,6.4,2.1,11.6,8.3,11.6H93C96.4,158.8,98.4,161.6,97.6,165z"/>
-			<path class="st1" d="M153.6,136.9l-0.7,2.8c-0.6,2.4-2,4.7-3.9,6.4c-0.2,0.2-0.4,0.3-0.6,0.5c-1.2,1-2.4,1.7-3.8,2.3
-				c0,0,0,0-0.1,0c-3,1.1-5.9,0.3-7.3-1.8l-33.7-51.9c-0.8-1.2-3-0.4-3.4,1.2l-12.4,49.4c-0.6,2.2-2.8,4-5,4H57.2
-				c-2.2,0-3.5-1.8-3-4l22.9-91.2l0.8-3.2c0.6-2.4,1.9-4.5,3.7-6.2c0.2-0.2,0.4-0.3,0.6-0.5c1.2-1,2.5-1.8,3.9-2.4c0,0,0,0,0.1,0
-				c2.9-1.2,5.7-0.4,7.1,1.7l42,64.7c0.8,1.2,3,0.4,3.4-1.2l15.6-62.1c0.6-2.2,2.8-4,5-4h14.4c2.2,0,3.5,1.8,3,4L153.6,136.9z"/>
+			<path class="st1" d="M97.6,165.8L97.6,165.8c-0.9,3.4-4.5,6.3-7.9,6.3H22.9c-6.3,0-10-5.3-8.4-11.7L48.2,26.2
+				c0.9-3.4,4.5-6.3,7.9-6.3h13.5c3.4,0,5.6,2.8,4.8,6.3L43.8,147.8c-1.6,6.5,2.1,11.7,8.4,11.7H93
+				C96.4,159.5,98.4,162.4,97.6,165.8z"/>
+			<path class="st1" d="M154.3,137.4l-0.7,2.8c-0.6,2.4-2,4.8-3.9,6.5c-0.2,0.2-0.4,0.3-0.6,0.5c-1.2,1-2.4,1.7-3.8,2.3
+				c0,0,0,0-0.1,0c-3,1.1-6,0.3-7.4-1.8l-34.1-52.5c-0.8-1.2-3-0.4-3.4,1.2l-12.5,50c-0.6,2.2-2.8,4-5.1,4H56.7c-2.2,0-3.5-1.8-3-4
+				l23.2-92.3l0.8-3.2c0.6-2.4,1.9-4.6,3.7-6.3c0.2-0.2,0.4-0.3,0.6-0.5c1.2-1,2.5-1.8,3.9-2.4c0,0,0,0,0.1,0
+				c2.9-1.2,5.8-0.4,7.2,1.7l42.5,65.5c0.8,1.2,3,0.4,3.4-1.2L155,44.8c0.6-2.2,2.8-4,5.1-4h14.6c2.2,0,3.5,1.8,3,4L154.3,137.4z"/>
 		</g>
 	</g>
 </mask>
-<radialGradient id="SVGID_00000034798288415084336640000017262444094625894029_" cx="96" cy="96" r="189.7391" gradientUnits="userSpaceOnUse">
-	<stop  offset="0" style="stop-color:#2272AF"/>
-	<stop  offset="5.644231e-02" style="stop-color:#2E7AB3"/>
-	<stop  offset="9.217878e-02" style="stop-color:#3980B7"/>
-	<stop  offset="0.1534" style="stop-color:#4085BA;stop-opacity:0.9481"/>
-	<stop  offset="0.2439" style="stop-color:#5491C1;stop-opacity:0.8713"/>
-	<stop  offset="0.3525" style="stop-color:#75A6CD;stop-opacity:0.7791"/>
-	<stop  offset="0.4753" style="stop-color:#A2C4DD;stop-opacity:0.675"/>
-	<stop  offset="0.6081" style="stop-color:#DCE9F2;stop-opacity:0.5624"/>
-	<stop  offset="0.6816" style="stop-color:#FFFFFF;stop-opacity:0.5"/>
-	<stop  offset="0.9565" style="stop-color:#FFFFFF;stop-opacity:0.4137"/>
-	<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0.4"/>
-</radialGradient>
-<g style="mask:url(#SVGID_1_);">
-<rect id="NL" x="-93.7" y="-93.7" style="fill:url(#SVGID_00000034798288415084336640000017262444094625894029_);stroke:#2272AF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" width="379.5" height="379.5"/>
+<g style="mask:url(#Swipe_00000046308168660427260890000018304333683032358805_);">
+	<g id="Swipe" >
+		<rect x="-288" y="-96" class="st3" width="768" height="384"/>
+		<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="-96" y1="96" x2="288" y2="96">
+			<stop  offset="0" style="stop-color:#2272AF"/>
+			<stop  offset="0.1918" style="stop-color:#2473B0"/>
+			<stop  offset="0.2608" style="stop-color:#2B78B2"/>
+			<stop  offset="0.3101" style="stop-color:#367FB6"/>
+			<stop  offset="0.3499" style="stop-color:#478ABD"/>
+			<stop  offset="0.384" style="stop-color:#5D98C5"/>
+			<stop  offset="0.4142" style="stop-color:#79A9CE"/>
+			<stop  offset="0.4415" style="stop-color:#99BEDA"/>
+			<stop  offset="0.4666" style="stop-color:#BFD6E8"/>
+			<stop  offset="0.489" style="stop-color:#E8F0F7"/>
+			<stop  offset="0.5" style="stop-color:#FFFFFF"/>
+			<stop  offset="0.511" style="stop-color:#E8F0F7"/>
+			<stop  offset="0.5334" style="stop-color:#BFD6E8"/>
+			<stop  offset="0.5585" style="stop-color:#99BEDA"/>
+			<stop  offset="0.5858" style="stop-color:#79A9CE"/>
+			<stop  offset="0.616" style="stop-color:#5D98C5"/>
+			<stop  offset="0.6501" style="stop-color:#478ABD"/>
+			<stop  offset="0.6899" style="stop-color:#367FB6"/>
+			<stop  offset="0.7392" style="stop-color:#2B78B2"/>
+			<stop  offset="0.8082" style="stop-color:#2473B0"/>
+			<stop  offset="1" style="stop-color:#2272AF"/>
+		</linearGradient>
+		<rect x="-96" y="-96" class="st4" width="384" height="384"/>
+	</g>
 </g>
+<g class="st5">
+	<path class="st6" d="M97.6,165.8L97.6,165.8c-0.9,3.4-4.5,6.3-7.9,6.3H22.9c-6.3,0-10-5.3-8.4-11.7L48.2,26.2
+		c0.9-3.4,4.5-6.3,7.9-6.3h13.5c3.4,0,5.6,2.8,4.8,6.3L43.8,147.8c-1.6,6.5,2.1,11.7,8.4,11.7H93C96.4,159.5,98.4,162.4,97.6,165.8z
+		"/>
+	<path class="st6" d="M154.3,137.4l-0.7,2.8c-0.6,2.4-2,4.8-3.9,6.5c-0.2,0.2-0.4,0.3-0.6,0.5c-1.2,1-2.4,1.7-3.8,2.3c0,0,0,0-0.1,0
+		c-3,1.1-6,0.3-7.4-1.8l-34.1-52.5c-0.8-1.2-3-0.4-3.4,1.2l-12.5,50c-0.6,2.2-2.8,4-5.1,4H56.7c-2.2,0-3.5-1.8-3-4l23.2-92.3
+		l0.8-3.2c0.6-2.4,1.9-4.6,3.7-6.3c0.2-0.2,0.4-0.3,0.6-0.5c1.2-1,2.5-1.8,3.9-2.4c0,0,0,0,0.1,0c2.9-1.2,5.8-0.4,7.2,1.7l42.5,65.5
+		c0.8,1.2,3,0.4,3.4-1.2L155,44.8c0.6-2.2,2.8-4,5.1-4h14.6c2.2,0,3.5,1.8,3,4L154.3,137.4z"/>
+</g>
+
 </svg>

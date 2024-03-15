@@ -19,7 +19,6 @@ export function ContactCard(props: ContactCardProps) {
 		if (themeMeta) {
 			themeMeta.setAttribute('content', props.color)
 		}
-		console.log(themeMeta)
 	},[props.color])
 
 	return (
@@ -60,7 +59,7 @@ export function ContactCard(props: ContactCardProps) {
 				</div>
 			</div>
 			{props.imageUrl ?
-				<div className="bg-primary pt-3"></div>
+				<div className="bg-primary" style={{height: '5%'}}></div>
 				: null}
 		</div>
 	);
