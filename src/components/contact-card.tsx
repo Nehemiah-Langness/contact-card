@@ -27,7 +27,7 @@ export function ContactCard(props: ContactCardProps) {
 			style={{ '--bs-primary': props.color, '--bs-primary-rgb': rgb } as React.CSSProperties}
 		>
 			<div className="d-flex flex-grow-1">
-				<div className="branding d-flex justify-content-center align-items-center">
+				<div className="branding d-flex justify-content-stretch align-items-stretch">
 					{props.imageUrl ? <img src={props.imageUrl} /> :
 						<div className="bg-primary flex-grow-1 align-self-stretch overflow-hidden position-relative">
 							<div className='light x1'></div>
