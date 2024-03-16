@@ -1,10 +1,12 @@
 import { faDownload, faExpandArrowsAlt, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ContactCard } from "./contact-card";
 import { VCard } from "../services/v-card";
 import { faShare } from "@fortawesome/free-solid-svg-icons/faShare";
 import { FormData } from "../types/form-data";
+import { useNavigate } from "react-router-dom";
+import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
 
 export function ViewMode({ details, setEditMode }: { details: FormData; setEditMode?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
@@ -37,9 +39,7 @@ export function ViewMode({ details, setEditMode }: { details: FormData; setEditM
 		}).toBase64()
 	), [details.contactImage, details.department, details.email, details.name, details.orgLogo, details.organization, details.phone, details.role, details.team, details.title]);
 
-	useEffect(() => {
-		console.log(atob(vCard));
-	}, [vCard]);
+	const navigate = useNavigate();
 
 
 	return (
@@ -49,15 +49,16 @@ export function ViewMode({ details, setEditMode }: { details: FormData; setEditM
 				<div className="edit-button">
 					<div className="d-flex">
 
-						{setEditMode && <button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button>}
+						{setEditMode ? <button type="button" onClick={() => setEditMode(true)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faPencil} /></button> :
+							<button type="button" onClick={() => navigate('/')} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faTimes} /></button>}
 						<button type="button" onClick={() => setExpand(x => !x)} className="mx-1 btn btn-light rounded-circle d-flex justify-content-center align-items-center shadow"><FontAwesomeIcon className="text-dark" icon={faExpandArrowsAlt} /></button>
 						{navigator.share && <button type="button" onClick={() => {
-							const detailCopy = {...details} as Partial<FormData>;
+							const detailCopy = { ...details } as Partial<FormData>;
 							delete detailCopy['contactImage'];
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							delete (detailCopy as any)['image'];
 							delete detailCopy['orgLogo'];
-							const url = window.location.origin + '/contact-card/view?data=' + encodeURIComponent(JSON.stringify(detailCopy));
+							const url = window.location.origin + '/view?data=' + encodeURIComponent(JSON.stringify(detailCopy));
 							console.log(url)
 							return navigator.share({
 								title: 'Share Contact Card',

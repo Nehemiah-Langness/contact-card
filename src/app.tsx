@@ -22,7 +22,7 @@ function usePersistantState<T>(name: string, defaultValue: T) {
 }
 
 const router = createBrowserRouter(
-	createRoutesFromElements(<Route path="/contact-card">
+	createRoutesFromElements(<Route path="/">
 		<Route path='view' element={<View />} />
 		<Route path='' element={<Index />} />
 	</Route>)
@@ -47,7 +47,7 @@ function View() {
 	const navigate = useNavigate()
 	useEffect(() => {
 		if (!details) {
-			navigate('/contact-card');
+			navigate('/');
 		}
 	}, [details, navigate])
 
