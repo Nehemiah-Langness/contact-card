@@ -11,20 +11,20 @@ export default defineConfig({
     includeAssets: ['favicon.svg'],
     manifest: {
       name: 'Contact Card',
-      background_color: '#212529',
       short_name: 'Contact Card',
       description: 'Build a contact card on your mobile device',
-      theme_color: '#222587',
+      theme_color: '#2272af',
+      background_color: '#f8f9fa',
       icons: [
         {
-          src: 'icon-192.svg',
+          src: 'logo192x192.png',
           sizes: '192x192',
-          type: 'image/svg'
+          type: 'image/png'
         },
         {
-          src: 'icon-512.svg',
+          src: 'logo512x512.png',
           sizes: '512x512',
-          type: 'image/svg'
+          type: 'image/png'
         }
       ]
     }
